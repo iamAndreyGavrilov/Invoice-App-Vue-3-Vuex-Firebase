@@ -89,6 +89,29 @@
           </div>
         </div>
       </div>
+      <!-- Детали счета -->
+      <div class="invoice-work flex flex-column">
+        <div class="payment flex">
+          <div class="input flex flex-column">
+            <label for="invoiceDate">Дата счета</label>
+            <input
+              disabled
+              type="text"
+              id="invoiceDate"
+              v-model="invoiceDate"
+            />
+          </div>
+          <div class="input flex flex-column">
+            <label for="paymentDueDate">оплатить до</label>
+            <input
+              disabled
+              type="text"
+              id="paymentDueDate"
+              v-model="paymentDueDate"
+            />
+          </div>
+        </div>
+      </div>
     </form>
   </div>
 </template>
