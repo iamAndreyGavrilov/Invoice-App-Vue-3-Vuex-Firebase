@@ -7,7 +7,7 @@
         <span>Всего счетов 4</span>
       </div>
       <div class="right flex">
-        <div @click="toggleFilterMenu" class="filter flex" ref="filter">
+        <div @click="toggleFilterMenu" class="filter flex">
           <span>Фильтр по статусу</span>
           <img src="@/assets/icon-arrow-down.svg" alt="" />
           <ul v-show="filterMenu" class="filter-menu">
@@ -37,6 +37,12 @@ export default {
     };
   },
   components: {},
+  methods: {
+    newInvoice() {},
+    toggleFilterMenu() {
+      this.filterMenu = !this.filterMenu;
+    },
+  },
 };
 </script>
 
@@ -61,13 +67,10 @@ export default {
         }
       }
       .filter {
+        cursor: pointer;
         position: relative;
         margin-right: 40px;
 
-        span,
-        img {
-          pointer-events: none;
-        }
         img {
           margin-left: 12px;
           width: 9px;
