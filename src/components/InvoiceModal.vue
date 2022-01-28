@@ -102,7 +102,7 @@
             />
           </div>
           <div class="input flex flex-column">
-            <label for="paymentDueDate">оплатить до</label>
+            <label for="paymentDueDate">Оплатить до</label>
             <input
               disabled
               type="text"
@@ -110,6 +110,71 @@
               v-model="paymentDueDate"
             />
           </div>
+        </div>
+        <div class="input flex flex-column">
+          <label for="paymentTerms">Условия оплаты</label>
+          <select required type="text" id="paymentTerms" v-model="paymentTerms">
+            <option value="30">30 дней</option>
+            <option value="60">60 дней</option>
+          </select>
+        </div>
+        <div class="input flex flex-column">
+          <label for="productDescription">Описание продукта</label>
+          <input
+            required
+            type="text"
+            id="productDescription"
+            v-model="productDescription"
+          />
+        </div>
+        <div class="work-items">
+          <h3>Item List</h3>
+          <table class="item-list">
+            <tr class="table-heading flex">
+              <th class="item-name">Item Name</th>
+              <th class="qty">Qty</th>
+              <th class="price">Price</th>
+              <th class="total">Total</th>
+            </tr>
+            <tr
+              class="table-items flex"
+              v-for="(item, index) in invoiceItemList"
+              :key="index"
+            >
+              <td class="item-name">
+                <input type="text" v-model="item.itemName" />
+              </td>
+              <td class="qty"><input type="text" v-model="item.qty" /></td>
+              <td class="price">
+                <input type="text" v-model="item.item.price" />
+              </td>
+              <td class="total flex">
+                ${{ (item.total = item.qty * item.price) }}
+              </td>
+              <img
+                @click="deleteInvoiceItem(item.id)"
+                src="@/assets/icon-delete.svg"
+                alt=""
+              />
+            </tr>
+          </table>
+
+          <div @click="addNewInvoiceItem" class="flex button">
+            <img src="@/assets/icon-plus.svg" alt="" />
+            Добавить новую позицию
+          </div>
+        </div>
+      </div>
+      <!-- Сохранить/выйти -->
+      <div class="save flex">
+        <div class="left">
+          <button @click="closeInvoice" class="red">Отмена</button>
+        </div>
+        <div class="right flex">
+          <button @click="saveDraft" class="dark-purple">
+            Сохранить черновик
+          </button>
+          <button @click="publishInvoice" class="purple">Создать счет</button>
         </div>
       </div>
     </form>
@@ -150,4 +215,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.invoice-content {
+  color: #fff;
+}
+</style>
