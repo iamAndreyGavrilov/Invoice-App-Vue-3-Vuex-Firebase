@@ -292,6 +292,13 @@ export default {
               align-self: center;
             }
           }
+          .table-heading {
+            margin-bottom: 16px;
+
+            th {
+              text-align: left;
+            }
+          }
           .table-items {
             position: relative;
             margin-bottom: 24px;
@@ -305,6 +312,26 @@ export default {
             }
           }
         }
+        .button {
+          color: #fff;
+          background-color: #252945;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          img {
+            margin-right: 4px;
+          }
+        }
+      }
+    }
+    .save {
+      margin-top: 60px;
+      justify-content: space-between;
+      div {
+        // flex: 1;
+      }
+      .right {
+        justify-content: flex-end;
       }
     }
   }
