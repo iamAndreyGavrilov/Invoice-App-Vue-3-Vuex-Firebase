@@ -231,6 +231,12 @@ export default {
   width: 100%;
   height: 100vh;
   overflow: scroll;
+
+  //убираю полосы прокрутки
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   @media (min-width: 900px) {
     left: 90px;
   }
