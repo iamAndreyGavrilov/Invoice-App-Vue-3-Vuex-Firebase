@@ -146,7 +146,7 @@
               </td>
               <td class="qty"><input type="text" v-model="item.qty" /></td>
               <td class="price">
-                <input type="text" v-model="item.item.price" />
+                <input type="text" v-model="item.price" />
               </td>
               <td class="total flex">
                 ${{ (item.total = item.qty * item.price) }}
@@ -183,6 +183,7 @@
 
 <script>
 import { mapMutations } from "vuex";
+import { uid } from "uid";
 
 export default {
   name: "invoiceModal",
@@ -216,6 +217,21 @@ export default {
 
     closeInvoice() {
       this.TOGGLE_INVOICE();
+    },
+    addNewInvoiceItem() {
+      this.invoiceItemList.push({
+        id: uid(),
+        itemName: "",
+        qty: "",
+        price: 0,
+        total: 0,
+      });
+    },
+    deleteInvoiceItem(id) {
+      console.log(id);
+      this.invoiceItemList = this.invoiceItemList.filter(
+        (item) => item.id !== id
+      );
     },
     checkClick() {},
     submitForm() {},
