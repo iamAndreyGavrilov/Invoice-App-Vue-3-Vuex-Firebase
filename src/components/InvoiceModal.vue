@@ -228,6 +228,17 @@ export default {
       this.dateOptions
     );
   },
+  watch: {
+    paymentTerms() {
+      const futureDate = new Date();
+      this.paymentDueDateUnix = futureDate.setDate(
+        futureDate.getDate() + parseInt(this.paymentTerms)
+      );
+      this.paymentDueDate = new Date(
+        this.paymentDueDateUnix
+      ).toLocaleDateString("en-GB", this.dateOptions);
+    },
+  },
 };
 </script>
 
