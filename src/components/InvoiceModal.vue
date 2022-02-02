@@ -188,6 +188,7 @@ export default {
   name: "invoiceModal",
   data() {
     return {
+      dateOptions: { year: "numeric", month: "numeric", day: "numeric" },
       billerStreetAddress: null,
       billerCity: null,
       billerZipCode: null,
@@ -218,6 +219,14 @@ export default {
     },
     checkClick() {},
     submitForm() {},
+  },
+  created() {
+    //запрос даты новоего счета
+    this.invoiceDateUnix = Date.now();
+    this.invoiceDate = new Date(this.invoiceDateUnix).toLocaleDateString(
+      "en-GB",
+      this.dateOptions
+    );
   },
 };
 </script>
