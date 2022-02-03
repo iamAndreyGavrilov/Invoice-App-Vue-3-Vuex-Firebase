@@ -128,13 +128,13 @@
           />
         </div>
         <div class="work-items">
-          <h3>Item List</h3>
+          <h3>Список товаров</h3>
           <table class="item-list">
             <tr class="table-heading flex">
-              <th class="item-name">Item Name</th>
-              <th class="qty">Qty</th>
-              <th class="price">Price</th>
-              <th class="total">Total</th>
+              <th class="item-name">Название товара</th>
+              <th class="qty">Кол-во</th>
+              <th class="price">Цена</th>
+              <th class="total">Итого</th>
             </tr>
             <tr
               class="table-items flex"
@@ -182,6 +182,8 @@
 </template>
 
 <script>
+//db from "../firebase/firebaseInit"
+import db from "../firebase/firebaseInit";
 import { mapMutations } from "vuex";
 import { uid } from "uid";
 
@@ -233,8 +235,58 @@ export default {
         (item) => item.id !== id
       );
     },
-    checkClick() {},
-    submitForm() {},
+
+    calcInvoiceTotal() {
+      this.invoiceTotal = 0;
+      this.invoiceItemList.forEach((item) => {
+        this.invoiceTotal += item.total;
+      });
+    },
+
+    publishInvoice() {
+      this.invoicePending = true;
+    },
+    saveDraft() {
+      this.invoiceDraft = true;
+    },
+    async uploadInvoice() {
+      if (this.invoiceItemList.length <= 0) {
+        alert("Пожалуйста, добавьте товар!");
+        return;
+      }
+      this.calcInvoiceTotal();
+      //db.collection
+      const dataBase = db.collection("invoices").doc();
+      await dataBase.set({
+        invoiceId: uid(6),
+        billerStreetAddress: this.billerStreetAddress,
+        billerCity: this.billerCity,
+        billerZipCode: this.billerZipCode,
+        billerCountry: this.billerCountry,
+        clientName: this.clientName,
+        clientEmail: this.clientEmail,
+        clientStreetAddress: this.clientStreetAddress,
+        clientCity: this.clientCity,
+        clientZipCode: this.clientZipCode,
+        clientCountry: this.clientCountry,
+        invoiceDateUnix: this.invoiceDateUnix,
+        invoiceDate: this.invoiceDate,
+        paymentTerms: this.paymentTerms,
+        paymentDueDateUnix: this.paymentDueDateUnix,
+        paymentDueDate: this.paymentDueDate,
+        productDescription: this.productDescription,
+        invoicePending: this.invoicePending,
+        invoiceDraft: this.invoiceDraft,
+        invoiceItemList: this.invoiceItemList,
+        invoiceTotal: this.invoiceTotal,
+        invoicePaid: null,
+      });
+
+      this.TOGGLE_INVOICE();
+    },
+    submitForm() {
+      this.uploadInvoice();
+    },
   },
   created() {
     //запрос даты новоего счета
