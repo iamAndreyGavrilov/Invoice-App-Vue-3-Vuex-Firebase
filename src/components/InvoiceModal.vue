@@ -169,13 +169,17 @@
       <!-- Сохранить/Отмена -->
       <div class="save flex">
         <div class="left">
-          <button @click="closeInvoice" class="red">Отмена</button>
+          <button type="button" @click="closeInvoice" class="red">
+            Отмена
+          </button>
         </div>
         <div class="right flex">
-          <button @click="saveDraft" class="dark-purple">
+          <button type="submit" @click="saveDraft" class="dark-purple">
             Сохранить черновик
           </button>
-          <button @click="publishInvoice" class="purple">Создать счет</button>
+          <button type="submit" @click="publishInvoice" class="purple">
+            Создать счет
+          </button>
         </div>
       </div>
     </form>
@@ -220,8 +224,12 @@ export default {
   components: { Loading },
 
   methods: {
-    ...mapMutations(["TOGGLE_INVOICE"]),
-
+    ...mapMutations(["TOGGLE_INVOICE", "TOGGLE_MODAL"]),
+    checkClick(event) {
+      if (event.target === this.$refs.invoiceWrap) {
+        this.TOGGLE_MODAL();
+      }
+    },
     closeInvoice() {
       this.TOGGLE_INVOICE();
     },
@@ -436,9 +444,7 @@ export default {
     .save {
       margin-top: 60px;
       justify-content: space-between;
-      div {
-        // flex: 1;
-      }
+
       .right {
         justify-content: flex-end;
       }
