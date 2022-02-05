@@ -5,6 +5,7 @@
     class="invoice-wrap flex flex-column"
   >
     <form @submit.prevent="submitForm" class="invoice-content">
+      <Loading v-show="loading" />
       <h1>Новый счет</h1>
       <!-- Отправитель -->
       <div class="bill-from flex flex-column">
@@ -184,6 +185,7 @@
 <script>
 //db from "../firebase/firebaseInit"
 import db from "../firebase/firebaseInit";
+import Loading from "../components/Loading.vue";
 import { mapMutations } from "vuex";
 import { uid } from "uid";
 
@@ -192,6 +194,7 @@ export default {
   data() {
     return {
       dateOptions: { year: "numeric", month: "numeric", day: "numeric" },
+      loading: null,
       billerStreetAddress: null,
       billerCity: null,
       billerZipCode: null,
@@ -214,6 +217,8 @@ export default {
       invoiceTotal: 0,
     };
   },
+  components: { Loading },
+
   methods: {
     ...mapMutations(["TOGGLE_INVOICE"]),
 
@@ -254,6 +259,7 @@ export default {
         alert("Пожалуйста, добавьте товар!");
         return;
       }
+      this.loading = true;
       this.calcInvoiceTotal();
       //db.collection
       const dataBase = db.collection("invoices").doc();
@@ -281,6 +287,8 @@ export default {
         invoiceTotal: this.invoiceTotal,
         invoicePaid: null,
       });
+
+      this.loading = false;
 
       this.TOGGLE_INVOICE();
     },
