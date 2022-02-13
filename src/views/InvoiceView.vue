@@ -199,6 +199,31 @@ export default {
         align-items: flex-end;
       }
     }
+    .middle {
+      margin-top: 50px;
+      color: #dfe3fa;
+      gap: 16px;
+      h4 {
+        font-size: 12px;
+        font-weight: 400;
+        margin-bottom: 12px;
+      }
+      p {
+        font-size: 12px;
+      }
+      .bill,
+      .payment {
+        flex: 1;
+      }
+      .payment {
+        h4:nth-child(3) {
+          margin-top: 32px;
+        }
+        p {
+          font-weight: 600;
+        }
+      }
+    }
   }
 }
 </style>
