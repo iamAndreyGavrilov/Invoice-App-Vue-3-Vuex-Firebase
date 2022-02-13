@@ -49,7 +49,7 @@
     <!-- invoice Details -->
     <div class="invoice-details flex flex-column">
       <div class="top flex">
-        <div class="left flex">
+        <div class="left flex flex-column">
           <p><span>#</span>{{ currentInvoice.invoiceId }}</p>
           <p>{{ currentInvoice.productDescription }}</p>
         </div>
@@ -79,29 +79,29 @@
           <h4>Отправить</h4>
           <p>{{ currentInvoice.clientName }}</p>
         </div>
-        <div class="bottom flex flex-column">
-          <div class="billing-items">
-            <div class="heading flex">
-              <p>Название товара</p>
-              <p>Кол-во</p>
-              <p>Цена</p>
-              <p>Итого</p>
-            </div>
-            <div
-              v-for="(item, index) in currentInvoice.invoiceItemList"
-              :key="index"
-              class="item flex"
-            >
-              <p>{{ item.itemName }}</p>
-              <p>{{ item.qty }}</p>
-              <p>{{ item.price }}</p>
-              <p>{{ item.total }}</p>
-            </div>
+      </div>
+      <div class="bottom flex flex-column">
+        <div class="billing-items">
+          <div class="heading flex">
+            <p>Название товара</p>
+            <p>Кол-во</p>
+            <p>Цена</p>
+            <p>Итого</p>
           </div>
-          <div class="total flex">
-            <p>Сумма долга</p>
-            <p>{{ currentInvoice.invoiceTotal }}</p>
+          <div
+            v-for="(item, index) in currentInvoice.invoiceItemList"
+            :key="index"
+            class="item flex"
+          >
+            <p>{{ item.itemName }}</p>
+            <p>{{ item.qty }}</p>
+            <p>{{ item.price }}</p>
+            <p>{{ item.total }}</p>
           </div>
+        </div>
+        <div class="total flex">
+          <p>Сумма долга</p>
+          <p>{{ currentInvoice.invoiceTotal }}</p>
         </div>
       </div>
     </div>
@@ -134,4 +134,71 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.invoice-view {
+  .nav-link {
+    align-items: center;
+    margin-bottom: 32px;
+    color: white;
+    font-size: 12px;
+    img {
+      margin-right: 16px;
+      width: 7px;
+      height: 10px;
+    }
+  }
+  .header,
+  .invoice-details {
+    background-color: #1e2139;
+    border-radius: 20px;
+  }
+  .header {
+    align-items: center;
+    padding: 24px 32px;
+    font-size: 12px;
+    .left {
+      align-items: center;
+      span {
+        color: #dfe3fa;
+        margin-right: 16px;
+      }
+    }
+    .right {
+      flex: 1;
+      justify-content: flex-end;
+    }
+    button {
+      color: white;
+    }
+  }
+  .invoice-details {
+    padding: 48px;
+    margin-top: 24px;
+    .top {
+      div {
+        color: #dfe3fa;
+        flex: 1;
+      }
+      .left {
+        font-size: 12px;
+        p:first-child {
+          font-size: 24px;
+          text-transform: uppercase;
+          color: white;
+          margin-bottom: 8px;
+        }
+        p:nth-child(2) {
+          font-size: 16px;
+        }
+        span {
+          color: #888eb0;
+        }
+      }
+      .right {
+        font-size: 12px;
+        align-items: flex-end;
+      }
+    }
+  }
+}
+</style>
