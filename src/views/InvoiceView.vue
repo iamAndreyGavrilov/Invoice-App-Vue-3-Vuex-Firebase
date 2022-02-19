@@ -223,6 +223,72 @@ export default {
           font-weight: 600;
         }
       }
+      .bill {
+        p:nth-child(2) {
+          font-size: 16px;
+        }
+
+        p {
+          font-size: 12px;
+          margin-top: auto;
+        }
+      }
+      .send-to {
+        flex: 2;
+      }
+    }
+    .bottom {
+      margin-top: 50px;
+      .billing-items {
+        padding: 32px;
+        border-radius: 20px 20px 0 0;
+        background-color: #252945;
+        .heading {
+          color: #dfe3fa;
+          font-size: 12px;
+          margin-bottom: 32px;
+
+          p:first-child {
+            flex: 3;
+            text-align: left;
+          }
+          p {
+            flex: 1;
+            text-align: right;
+          }
+        }
+        .item {
+          margin-bottom: 32px;
+          font-size: 13px;
+          color: white;
+          &:last-child {
+            margin-bottom: 0;
+          }
+          p:first-child {
+            flex: 3;
+            text-align: left;
+          }
+          p {
+            flex: 1;
+            text-align: right;
+          }
+        }
+      }
+      .total {
+        color: white;
+        padding: 32px;
+        background-color: rgba(12, 14, 22, 0.7);
+        align-items: center;
+        border-radius: 0 0 20px 20px;
+        p {
+          flex: 1;
+          font-size: 12px;
+        }
+        p:nth-child(2) {
+          font-size: 28px;
+          text-align: right;
+        }
+      }
     }
   }
 }
