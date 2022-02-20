@@ -6,7 +6,9 @@
   >
     <form @submit.prevent="submitForm" class="invoice-content">
       <Loading v-show="loading" />
-      <h1>Новый счет</h1>
+      <h1 v-if="!editInvoice">Новый счет</h1>
+      <h1 v-else>Редактировать счет</h1>
+
       <!-- Отправитель -->
       <div class="bill-from flex flex-column">
         <h4>Отправитель</h4>
@@ -174,11 +176,24 @@
           </button>
         </div>
         <div class="right flex">
-          <button type="submit" @click="saveDraft" class="dark-purple">
+          <button
+            v-if="!editInvoice"
+            type="submit"
+            @click="saveDraft"
+            class="dark-purple"
+          >
             Сохранить черновик
           </button>
-          <button type="submit" @click="publishInvoice" class="purple">
+          <button
+            v-if="!editInvoice"
+            type="submit"
+            @click="publishInvoice"
+            class="purple"
+          >
             Создать счет
+          </button>
+          <button v-if="editInvoice" type="submit" class="purple">
+            Обновить счет
           </button>
         </div>
       </div>
@@ -187,10 +202,9 @@
 </template>
 
 <script>
-//db from "../firebase/firebaseInit"
 import db from "../firebase/firebaseInit";
 import Loading from "../components/Loading.vue";
-import { mapMutations } from "vuex";
+import { mapMutations, mapState } from "vuex";
 import { uid } from "uid";
 
 export default {
@@ -224,7 +238,7 @@ export default {
   components: { Loading },
 
   methods: {
-    ...mapMutations(["TOGGLE_INVOICE", "TOGGLE_MODAL"]),
+    ...mapMutations(["TOGGLE_INVOICE", "TOGGLE_MODAL", "TOGGLE_EDIT_INVOICE"]),
     checkClick(event) {
       if (event.target === this.$refs.invoiceWrap) {
         this.TOGGLE_MODAL();
@@ -232,6 +246,9 @@ export default {
     },
     closeInvoice() {
       this.TOGGLE_INVOICE();
+      if (this.editInvoice) {
+        this.TOGGLE_EDIT_INVOICE();
+      }
     },
     addNewInvoiceItem() {
       this.invoiceItemList.push({
@@ -311,6 +328,9 @@ export default {
       "en-GB",
       this.dateOptions
     );
+  },
+  computed: {
+    ...mapState(["editInvoice"]),
   },
   watch: {
     paymentTerms() {
