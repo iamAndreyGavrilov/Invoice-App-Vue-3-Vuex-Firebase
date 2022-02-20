@@ -77,7 +77,7 @@
         </div>
         <div class="send-to flex flex-column">
           <h4>Отправить</h4>
-          <p>{{ currentInvoice.clientName }}</p>
+          <p>{{ currentInvoice.clientEmail }}</p>
         </div>
       </div>
       <div class="bottom flex flex-column">
