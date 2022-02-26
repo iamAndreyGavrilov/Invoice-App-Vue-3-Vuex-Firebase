@@ -4,7 +4,7 @@
     <div class="header flex">
       <div class="left flex flex-column">
         <h1>Счета</h1>
-        <span>Всего счетов 4</span>
+        <span>Всего счетов {{ invoiceData.length }}</span>
       </div>
       <div class="right flex">
         <div @click="toggleFilterMenu" class="filter flex">
