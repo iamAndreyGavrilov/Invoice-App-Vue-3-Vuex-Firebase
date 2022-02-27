@@ -8,13 +8,16 @@
       </div>
       <div class="right flex">
         <div @click="toggleFilterMenu" class="filter flex">
-          <span>Фильтр по статусу</span>
+          <span
+            >Фильтр по статусу
+            <span v-if="filteredInvoice">: {{ filteredInvoice }}</span></span
+          >
           <img src="@/assets/icon-arrow-down.svg" alt="" />
           <ul v-show="filterMenu" class="filter-menu">
-            <li>Черновик</li>
-            <li>Ожидает оплаты</li>
-            <li>Оплачен</li>
-            <li>Очистить фильтр</li>
+            <li @click="filteredInvoices">Черновик</li>
+            <li @click="filteredInvoices">Ожидает оплаты</li>
+            <li @click="filteredInvoices">Оплачен</li>
+            <li @click="filteredInvoices">Очистить фильтр</li>
           </ul>
         </div>
         <div @click="newInvoice" class="button flex">
@@ -28,7 +31,7 @@
     <!-- Счета -->
     <div v-if="invoiceData.length > 0">
       <Invoice
-        v-for="(invoice, index) in invoiceData"
+        v-for="(invoice, index) in filteredData"
         v-bind:invoice="invoice"
         :key="index"
       />
@@ -50,6 +53,7 @@ export default {
   data() {
     return {
       filterMenu: null,
+      filteredInvoice: null,
     };
   },
   components: { Invoice },
@@ -61,9 +65,30 @@ export default {
     toggleFilterMenu() {
       this.filterMenu = !this.filterMenu;
     },
+    filteredInvoices(e) {
+      if (e.target.innerText === "Очистить фильтр") {
+        this.filteredInvoice = null;
+        return;
+      }
+      this.filteredInvoice = e.target.innerText;
+    },
   },
   computed: {
     ...mapState(["invoiceData"]),
+    filteredData() {
+      return this.invoiceData.filter((invoice) => {
+        if (this.filteredInvoice === "Черновик") {
+          return invoice.invoiceDraft === true;
+        }
+        if (this.filteredInvoice === "Ожидает оплаты") {
+          return invoice.invoicePending === true;
+        }
+        if (this.filteredInvoice === "Оплачен") {
+          return invoice.invoicePaid === true;
+        }
+        return invoice;
+      });
+    },
   },
 };
 </script>
