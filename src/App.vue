@@ -36,6 +36,11 @@ export default {
     InvoiceModal,
     Modal,
   },
+  created() {
+    this.GET_INVOICES();
+    this.checkScreen();
+    window.addEventListener("resize", this.checkScreen);
+  },
   methods: {
     ...mapActions(["GET_INVOICES"]),
 
@@ -51,11 +56,6 @@ export default {
 
   computed: {
     ...mapState(["invoiceModal", "modalActive", "invoicesLoaded"]),
-  },
-  created() {
-    this.GET_INVOICES();
-    this.checkScreen();
-    window.addEventListener("resize", this.checkScreen);
   },
 };
 </script>
